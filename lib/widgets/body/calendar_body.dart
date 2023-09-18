@@ -1,18 +1,26 @@
 import 'package:calendar_pager/extensions/date_extensions.dart';
 import 'package:calendar_pager/state/calendar_state.dart';
 import 'package:calendar_pager/widgets/calendar_header.dart';
-import 'package:calendar_pager/widgets/calendar_pager.dart';
+import 'package:calendar_pager/widgets/calendar_slider.dart';
 import 'package:calendar_pager/widgets/calendar_row.dart';
+import 'package:calendar_pager/widgets/style/calendar_pager_style.dart';
 import 'package:flutter/material.dart';
 
-class CalendarPageBody extends StatefulWidget {
-  const CalendarPageBody({super.key});
+class CalendarBody extends StatefulWidget {
+  final CalendarPagerStyle style;
+  final bool hasHeader;
+
+  const CalendarBody({
+    super.key,
+    required this.style,
+    this.hasHeader = true,
+  });
 
   @override
-  State<CalendarPageBody> createState() => _CalendarPageBodyState();
+  State<CalendarBody> createState() => _CalendarBodyState();
 }
 
-class _CalendarPageBodyState extends State<CalendarPageBody> {
+class _CalendarBodyState extends State<CalendarBody> {
   final PageController _pageController = PageController(initialPage: 1);
   late CalendarState state;
 
@@ -24,7 +32,7 @@ class _CalendarPageBodyState extends State<CalendarPageBody> {
     final previouWeek = currentWeek.first.getPreviousWeek();
     final nextWeek = currentWeek.last.getNextWeek();
     state = CalendarState(
-      selectedDate: DateTime.now(),
+      selectedDate: DateTime.now().getDateOnly(),
       weeks: [previouWeek, currentWeek, nextWeek],
     );
   }
@@ -41,7 +49,11 @@ class _CalendarPageBodyState extends State<CalendarPageBody> {
       children: [
         Column(
           children: [
-            CalendarHeader(date: state.selectedDate),
+            if (widget.hasHeader)
+              CalendarHeader(
+                date: state.selectedDate,
+                style: widget.style.headerStyle,
+              ),
             CalendarSlider(
               pageController: _pageController,
               date: state.selectedDate,
@@ -51,6 +63,7 @@ class _CalendarPageBodyState extends State<CalendarPageBody> {
                       week: week,
                       selectedDate: state.selectedDate,
                       onDayPressed: (day) => {},
+                      style: widget.style.rowStyle,
                     ),
                   )
                   .toList(),

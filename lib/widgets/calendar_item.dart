@@ -32,8 +32,8 @@ class CalendarItem extends StatelessWidget {
               onTap: onPressed,
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 500),
-                height: 64,
-                width: 64,
+                height: 40,
+                width: 40,
                 alignment: Alignment.center,
                 // Context primary
                 decoration: BoxDecoration(
@@ -43,7 +43,7 @@ class CalendarItem extends StatelessWidget {
                   ),
                   shape: BoxShape.circle,
                   // Context primary and background secondary
-                  color: isSelectedDate ? Colors.black26 : Colors.amber,
+                  color: isSelectedDate ? Colors.amber : Colors.black26,
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.2),
@@ -53,13 +53,15 @@ class CalendarItem extends StatelessWidget {
                     )
                   ],
                 ),
-                child: Text(date.day.toString(),
-                    style: TextStyle(
-                      // Is Selected
-                      fontSize: 16,
-                      fontWeight: isSelectedDate ? FontWeight.bold : null,
-                      color: isSelectedDate ? Colors.white : Colors.amber,
-                    )),
+                child: Text(
+                  date.day.toString(),
+                  style: TextStyle(
+                    // Is Selected
+                    fontSize: 16,
+                    fontWeight: isSelectedDate ? FontWeight.bold : null,
+                    color: isSelectedDate ? Colors.white : Colors.amber,
+                  ),
+                ),
               ),
             ),
           ],

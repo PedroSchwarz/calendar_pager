@@ -19,12 +19,11 @@ class CalendarSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 90,
+      height: 106,
       child: PageView(
         controller: pageController,
         onPageChanged: (index) {
           if (index == 0) {
-            // bloc.add(CalendarFetchWeek(type: FetchWeekType.previous));
             onGoToFirstWeek();
             pageController.nextPage(
               duration: const Duration(milliseconds: 100),
@@ -32,7 +31,6 @@ class CalendarSlider extends StatelessWidget {
             );
           } else if (index == rows.length - 1) {
             onGoToLastPage();
-            // bloc.add(CalendarFetchWeek(type: FetchWeekType.next));
           }
         },
         children: rows,
