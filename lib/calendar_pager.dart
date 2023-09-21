@@ -1,3 +1,5 @@
 library calendar_pager;
 
-export 'widgets/style/calendar_pager_style.dart';
+export 'widgets/theme/calendar_pager_theme.dart';
+
+export 'widgets/calendar_pager_view.dart' show CalendarPagerView;

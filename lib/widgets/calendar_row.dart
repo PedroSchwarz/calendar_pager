@@ -1,4 +1,4 @@
-import 'package:calendar_pager/calendar_pager.dart';
+import 'package:calendar_pager/widgets/theme/calendar_pager_theme.dart';
 import 'package:flutter/material.dart';
 import 'calendar_item.dart';
 
@@ -6,20 +6,20 @@ class CalendarRow extends StatelessWidget {
   final List<DateTime> week;
   final DateTime selectedDate;
   final Function(DateTime) onDayPressed;
-  final CalendarRowStyle style;
+  final CalendarPagerTheme theme;
 
   const CalendarRow({
     super.key,
     required this.week,
     required this.selectedDate,
     required this.onDayPressed,
-    required this.style,
+    required this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: style.rowBackground,
+      color: theme.background,
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -31,6 +31,7 @@ class CalendarRow extends StatelessWidget {
               isSelectedDate: isSelectedDate,
               date: day,
               onPressed: selectedDate == day ? null : () => onDayPressed(day),
+              theme: theme.itemTheme,
             );
           },
         ).toList(),

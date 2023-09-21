@@ -1,16 +1,19 @@
 import 'package:calendar_pager/extensions/date_extensions.dart';
+import 'package:calendar_pager/widgets/theme/calendar_pager_theme.dart';
 import 'package:flutter/material.dart';
 
 class CalendarItem extends StatelessWidget {
   final bool isSelectedDate;
   final DateTime date;
   final Function()? onPressed;
+  final CalendarItemTheme theme;
 
   const CalendarItem({
     super.key,
     required this.isSelectedDate,
     required this.date,
     this.onPressed,
+    required this.theme,
   });
 
   @override
@@ -20,9 +23,7 @@ class CalendarItem extends StatelessWidget {
       children: [
         Text(
           date.getDayName(),
-          style: TextStyle(
-            fontWeight: isSelectedDate ? FontWeight.bold : null,
-          ),
+          style: isSelectedDate ? theme.selectedDayNameText : theme.dayNameText,
         ),
         const SizedBox(height: 8),
         Stack(
@@ -35,32 +36,31 @@ class CalendarItem extends StatelessWidget {
                 height: 40,
                 width: 40,
                 alignment: Alignment.center,
-                // Context primary
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: Colors.black26,
+                    color: isSelectedDate
+                        ? theme.selectedBorderColor
+                        : theme.borderColor,
                     width: 3,
                   ),
                   shape: BoxShape.circle,
-                  // Context primary and background secondary
-                  color: isSelectedDate ? Colors.amber : Colors.black26,
+                  color: isSelectedDate
+                      ? theme.selectedItemBackground
+                      : theme.itemBackground,
                   boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      blurRadius: 2,
-                      offset: const Offset(0, 1),
-                      spreadRadius: 2,
-                    )
+                    if (theme.hasShadow)
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 2,
+                        offset: const Offset(0, 1),
+                        spreadRadius: 2,
+                      )
                   ],
                 ),
                 child: Text(
                   date.day.toString(),
-                  style: TextStyle(
-                    // Is Selected
-                    fontSize: 16,
-                    fontWeight: isSelectedDate ? FontWeight.bold : null,
-                    color: isSelectedDate ? Colors.white : Colors.amber,
-                  ),
+                  style:
+                      isSelectedDate ? theme.selectedDateText : theme.dateText,
                 ),
               ),
             ),
@@ -73,7 +73,7 @@ class CalendarItem extends StatelessWidget {
             width: 8,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(100),
-              color: Colors.amber,
+              color: theme.currentDateIndicatorColor,
             ),
           ),
       ],
