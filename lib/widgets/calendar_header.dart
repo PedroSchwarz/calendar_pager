@@ -1,12 +1,10 @@
-import 'package:calendar_pager/extensions/date_extensions.dart';
-import 'package:calendar_pager/widgets/theme/calendar_pager_theme.dart';
-import 'package:flutter/material.dart';
+part of 'calendar_pager_view.dart';
 
-class CalendarHeader extends StatelessWidget {
+class _CalendarHeader extends StatelessWidget {
   final DateTime date;
   final CalendarHeaderTheme theme;
 
-  const CalendarHeader({
+  const _CalendarHeader({
     super.key,
     required this.date,
     required this.theme,

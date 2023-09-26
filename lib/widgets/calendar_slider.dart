@@ -1,15 +1,17 @@
-import 'package:flutter/material.dart';
+part of 'calendar_pager_view.dart';
 
-class CalendarSlider extends StatelessWidget {
+class _CalendarSlider extends StatelessWidget {
   final PageController pageController;
+  final bool isSnapping;
   final DateTime date;
   final List<Widget> rows;
   final VoidCallback onGoToFirstWeek;
   final VoidCallback onGoToLastPage;
 
-  const CalendarSlider({
+  const _CalendarSlider({
     super.key,
     required this.pageController,
+    required this.isSnapping,
     required this.date,
     required this.rows,
     required this.onGoToFirstWeek,
@@ -21,6 +23,7 @@ class CalendarSlider extends StatelessWidget {
     return SizedBox(
       height: 106,
       child: PageView(
+        pageSnapping: isSnapping,
         controller: pageController,
         onPageChanged: (index) {
           if (index == 0) {

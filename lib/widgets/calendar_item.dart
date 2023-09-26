@@ -1,14 +1,12 @@
-import 'package:calendar_pager/extensions/date_extensions.dart';
-import 'package:calendar_pager/widgets/theme/calendar_pager_theme.dart';
-import 'package:flutter/material.dart';
+part of 'calendar_pager_view.dart';
 
-class CalendarItem extends StatelessWidget {
+class _CalendarItem extends StatelessWidget {
   final bool isSelectedDate;
   final DateTime date;
   final Function()? onPressed;
   final CalendarItemTheme theme;
 
-  const CalendarItem({
+  const _CalendarItem({
     super.key,
     required this.isSelectedDate,
     required this.date,
