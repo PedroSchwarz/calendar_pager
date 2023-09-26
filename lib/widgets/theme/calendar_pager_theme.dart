@@ -16,8 +16,8 @@ class CalendarPagerTheme {
     required Color accent,
     required Color onAccent,
     required TextStyle headerTitle,
-    required TextStyle headerSubtitle,
-    required TextStyle dateText,
+    TextStyle headerSubtitle = const TextStyle(fontSize: 16),
+    TextStyle dateText = const TextStyle(fontSize: 16),
     required Color itemBorder,
   }) {
     return CalendarPagerTheme(
