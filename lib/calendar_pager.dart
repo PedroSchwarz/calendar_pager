@@ -1,7 +1,5 @@
 library calendar_pager;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+export 'widgets/theme/calendar_pager_theme.dart';
+
+export 'widgets/calendar_pager_view.dart' show CalendarPagerView;
