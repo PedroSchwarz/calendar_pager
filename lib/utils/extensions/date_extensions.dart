@@ -1,4 +1,4 @@
-import 'package:calendar_pager/extensions/string_extensions.dart';
+import 'package:calendar_pager/utils/extensions/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
