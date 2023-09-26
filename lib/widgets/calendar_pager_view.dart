@@ -40,12 +40,7 @@ class _CalendarPagerViewState extends State<CalendarPagerView> {
   @override
   void initState() {
     super.initState();
-    DateTime currentDate;
-    if (widget.initialDate != null) {
-      currentDate = widget.initialDate!.getDateOnly();
-    } else {
-      currentDate = DateTime.now().getDateOnly();
-    }
+    DateTime currentDate = (widget.initialDate ?? DateTime.now()).getDateOnly();
     final startOfWeek = currentDate.getStartOfWeekFromDate();
     final currentWeek = startOfWeek.getWeekFromStartDate();
     final previouWeek = currentWeek.first.getPreviousWeek();
@@ -54,7 +49,7 @@ class _CalendarPagerViewState extends State<CalendarPagerView> {
       selectedDate: currentDate,
       weeks: [previouWeek, currentWeek, nextWeek],
     );
-    widget.onDateSelected!(currentDate);
+    widget.onDateSelected?.call(currentDate);
   }
 
   @override
@@ -67,7 +62,7 @@ class _CalendarPagerViewState extends State<CalendarPagerView> {
     setState(() {
       state = state.copyWith(selectedDate: date);
     });
-    widget.onDateSelected!(date);
+    widget.onDateSelected?.call(date);
   }
 
   void _onFetchPreviousWeek() {
@@ -75,9 +70,7 @@ class _CalendarPagerViewState extends State<CalendarPagerView> {
     setState(() {
       state = state.copyWith(weeks: [previousWeek, ...state.weeks]);
     });
-    if (widget.onPreviousWeekFetched != null) {
-      widget.onPreviousWeekFetched!();
-    }
+    widget.onPreviousWeekFetched?.call();
   }
 
   void _onFetchNextWeek() {
@@ -85,58 +78,51 @@ class _CalendarPagerViewState extends State<CalendarPagerView> {
     setState(() {
       state = state.copyWith(weeks: [...state.weeks, nextWeek]);
     });
-    if (widget.onNextWeekFetched != null) {
-      widget.onNextWeekFetched!();
-    }
+    widget.onNextWeekFetched?.call();
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Column(
-          children: [
-            if (widget.hasHeader)
-              _CalendarHeader(
-                key: const Key(_WidgetsConstants.calendarHeaderKey),
-                date: state.selectedDate,
-                theme: widget.theme.headerTheme,
-              ),
-            _CalendarSlider(
-              key: const Key(_WidgetsConstants.calendarSliderKey),
-              pageController: _pageController,
-              isSnapping: widget.isSnapping,
-              date: state.selectedDate,
-              rows: state.weeks.indexed
-                  .map(
-                    (content) => _CalendarRow(
-                      key: Key(_WidgetsConstants.calendarRowKey(content.$1)),
-                      week: content.$2,
-                      background: widget.theme.background,
-                      itemBuilder: (itemIndex, day) {
-                        final isSelectedDate =
-                            state.selectedDate.isAtSameMomentAs(day);
+        if (widget.hasHeader)
+          _CalendarHeader(
+            key: const Key(_WidgetsConstants.calendarHeaderKey),
+            date: state.selectedDate,
+            theme: widget.theme.headerTheme,
+          ),
+        _CalendarSlider(
+          key: const Key(_WidgetsConstants.calendarSliderKey),
+          pageController: _pageController,
+          isSnapping: widget.isSnapping,
+          date: state.selectedDate,
+          rows: state.weeks.indexed
+              .map(
+                (content) => _CalendarRow(
+                  key: Key(_WidgetsConstants.calendarRowKey(content.$1)),
+                  week: content.$2,
+                  background: widget.theme.background,
+                  itemBuilder: (itemIndex, day) {
+                    final isSelectedDate =
+                        state.selectedDate.isAtSameMomentAs(day);
 
-                        return _CalendarItem(
-                          key: Key(_WidgetsConstants.calendarItemKey(
-                            content.$1,
-                            itemIndex,
-                          )),
-                          isSelectedDate: isSelectedDate,
-                          date: day,
-                          onPressed: isSelectedDate
-                              ? null
-                              : () => _onDateSelected(day),
-                          theme: widget.theme.itemTheme,
-                        );
-                      },
-                    ),
-                  )
-                  .toList(),
-              onGoToFirstWeek: _onFetchPreviousWeek,
-              onGoToLastPage: _onFetchNextWeek,
-            ),
-          ],
+                    return _CalendarItem(
+                      key: Key(_WidgetsConstants.calendarItemKey(
+                        content.$1,
+                        itemIndex,
+                      )),
+                      isSelectedDate: isSelectedDate,
+                      date: day,
+                      onPressed:
+                          isSelectedDate ? null : () => _onDateSelected(day),
+                      theme: widget.theme.itemTheme,
+                    );
+                  },
+                ),
+              )
+              .toList(),
+          onGoToFirstWeek: _onFetchPreviousWeek,
+          onGoToLastPage: _onFetchNextWeek,
         ),
       ],
     );

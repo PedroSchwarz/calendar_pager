@@ -21,7 +21,8 @@ class _CalendarSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 106,
+      // TODO: Improve widget dynamic height
+      height: 111,
       child: PageView(
         pageSnapping: isSnapping,
         controller: pageController,

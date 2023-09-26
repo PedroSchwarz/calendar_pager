@@ -16,7 +16,7 @@ class _CalendarRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: background,
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.only(top: 8, bottom: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         mainAxisSize: MainAxisSize.max,
