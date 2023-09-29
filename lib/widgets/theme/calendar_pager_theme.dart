@@ -5,12 +5,41 @@ class CalendarPagerTheme {
   final CalendarHeaderTheme headerTheme;
   final CalendarItemTheme itemTheme;
 
+  /// Calendar Pager Widget Theme
+  ///
+  /// [background] Calendar Pager Slider bakcground color
+  ///
+  /// [headerTheme] Calendar Pager Header Theme
+  ///
+  /// [itemTheme] Calendar Pager Date Items Theme
   CalendarPagerTheme({
     required this.background,
     required this.headerTheme,
     required this.itemTheme,
   });
 
+  /// CalendarPagerTheme factory using common colors and TextStyles.
+  ///
+  /// [background] Background color of both Header and Slider.
+  ///
+  /// [accent] Accent color used for the current date indicator and selected date background.
+  ///
+  /// [onAccent] Color of the content stacked over the accent color content.
+  ///
+  /// [headerTitle] Header Title [TextStyle].
+  ///
+  /// [headerSubtitle] Header Subtitle [TextStyle].
+  /// * Optional.
+  /// * Default value is a [TextStyle] with fontSize of 16.
+  ///
+  ///  [dateText] Date Text [TextStyle].
+  /// * Optional.
+  /// * Default value is a [TextStyle] with fontSize of 16.
+  /// * The value applies for days's names and for the date item text.
+  /// * The value applies for the selected state of the day's name but with fontWeight as bold.
+  /// * The value applies for the selected state of the date's item but with fontWeight as bold and color as onAccent.
+  ///
+  /// [itemBorder] Item border color for the dates.
   factory CalendarPagerTheme.from({
     required Color background,
     required Color accent,
@@ -56,6 +85,21 @@ class CalendarHeaderTheme {
   final bool hasCompleteDate;
   final CrossAxisAlignment alignment;
 
+  /// Calendar Pager Widget Header Theme.
+  ///
+  /// [headerBackground] Background color.
+  ///
+  /// [primaryText] Header's month info [TextStyle].
+  ///
+  /// [secondaryText] Header's year info [TextStyle].
+  ///
+  /// [hasCompleteDate] Boolean that shows/hides the complete date info.
+  /// * Optional.
+  /// * Default value is [true]
+  ///
+  /// [alignment] Used to align content [CrossAxisAlignment].
+  /// * Optional.
+  /// * Default value is [CrossAxisAlignment.start].
   CalendarHeaderTheme({
     required this.headerBackground,
     required this.primaryText,
@@ -79,6 +123,33 @@ class CalendarItemTheme {
   final TextStyle selectedDateText;
   final Color currentDateIndicatorColor;
 
+  /// Calendar Pager Widget Date Item Theme.
+  ///
+  /// [dayNameText] Day's name [TextStyle].
+  ///
+  /// [selectedDayNameText] Day's name [TextStyle] when day is selected.
+  ///
+  /// [borderColor] Color of the border of the item containing the date.
+  ///
+  /// [selectedBorderColor] Color of the border of the item containing the date when it's selected.
+  ///
+  /// [itemShape] Used to determine the shape of the box where the date is contained [BoxShape].
+  /// * Optional.
+  /// * Default value is [BoxShape.circle].
+  ///
+  /// [itemBackground] Color used as background for the date item container.
+  ///
+  /// [selectedItemBackground] Color used as background for the date item container when the date is selected.
+  ///
+  /// [hasShadow] Boolean that shows/hides the shadow of the date's container.
+  /// * Optional.
+  /// * Default value is [true].
+  ///
+  /// [dateText] Date's text [TextStyle].
+  ///
+  /// [selectedDateText] Date's text [TextStyle] when date is selected.
+  ///
+  /// [currentDateIndicatorColor] Color of the current date's indicator thats placed below the date container.
   CalendarItemTheme({
     required this.dayNameText,
     required this.selectedDayNameText,
