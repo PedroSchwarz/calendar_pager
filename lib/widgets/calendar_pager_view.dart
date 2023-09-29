@@ -18,6 +18,34 @@ class CalendarPagerView extends StatefulWidget {
   final VoidCallback? onPreviousWeekFetched;
   final VoidCallback? onNextWeekFetched;
 
+  /// Calendar Pager Widget.
+  ///
+  /// [theme] Widget's theming object.
+  ///
+  /// [hasHeader] Boolean used to show/hide the date header.
+  /// * Header involves Month - Year and complete date as subtitle.
+  /// * Optional.
+  /// * Default value is [true]
+  ///
+  /// [isSnapping] Boolean used to determine the physics of the underlying [PageView].
+  /// * Optional.
+  /// * Default value is [true].
+  ///
+  /// [initialDate] Initial optional value that determines the initial selected date.
+  /// * Optional.
+  /// * Default value is [null].
+  ///
+  /// [onDateSelected] Callback function that passes the selected date.
+  /// * Optional.
+  /// * Default value is [null].
+  ///
+  /// [onPreviousWeekFetched] Listener function that's triggered when the previous week is fetched.
+  /// * Optional.
+  /// * Default value is [null].
+  ///
+  /// [onNextWeekFetched] Listener function that's triggered when the next week is fetched.
+  /// * Optional.
+  /// * Default value is [null].
   const CalendarPagerView({
     super.key,
     required this.theme,

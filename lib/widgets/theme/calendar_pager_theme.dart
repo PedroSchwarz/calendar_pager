@@ -5,13 +5,13 @@ class CalendarPagerTheme {
   final CalendarHeaderTheme headerTheme;
   final CalendarItemTheme itemTheme;
 
-  /// Calendar Pager Widget Theme
+  /// Calendar Pager Widget Theme.
   ///
-  /// [background] Calendar Pager Slider bakcground color
+  /// [background] Calendar Pager Slider bakcground color.
   ///
-  /// [headerTheme] Calendar Pager Header Theme
+  /// [headerTheme] Calendar Pager Header Theme.
   ///
-  /// [itemTheme] Calendar Pager Date Items Theme
+  /// [itemTheme] Calendar Pager Date Items Theme.
   CalendarPagerTheme({
     required this.background,
     required this.headerTheme,
@@ -95,7 +95,7 @@ class CalendarHeaderTheme {
   ///
   /// [hasCompleteDate] Boolean that shows/hides the complete date info.
   /// * Optional.
-  /// * Default value is [true]
+  /// * Default value is [true].
   ///
   /// [alignment] Used to align content [CrossAxisAlignment].
   /// * Optional.
