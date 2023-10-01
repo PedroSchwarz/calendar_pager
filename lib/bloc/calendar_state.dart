@@ -1,8 +1,13 @@
-class CalendarState {
+import 'package:equatable/equatable.dart';
+
+class CalendarState extends Equatable {
   final DateTime selectedDate;
   final List<List<DateTime>> weeks;
 
-  CalendarState({required this.selectedDate, required this.weeks});
+  const CalendarState({
+    required this.selectedDate,
+    required this.weeks,
+  });
 
   CalendarState copyWith({
     DateTime? selectedDate,
@@ -13,4 +18,7 @@ class CalendarState {
       weeks: weeks ?? this.weeks,
     );
   }
+
+  @override
+  List<Object?> get props => [selectedDate, weeks];
 }
