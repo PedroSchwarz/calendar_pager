@@ -1,6 +1,7 @@
 import 'package:calendar_pager/bloc/calendar_bloc.dart';
 import 'package:calendar_pager/bloc/calendar_event.dart';
 import 'package:calendar_pager/bloc/calendar_state.dart';
+import 'package:calendar_pager/utils/constants/widgets_constants.dart';
 import 'package:calendar_pager/utils/extensions/date_extensions.dart';
 import 'package:calendar_pager/widgets/theme/calendar_pager_theme.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,6 @@ part 'calendar_slider.dart';
 part 'calendar_row.dart';
 part 'calendar_item.dart';
 part 'calendar_header.dart';
-part '../utils/constants/widgets_constants.dart';
 
 class CalendarPagerView extends StatelessWidget {
   final CalendarPagerTheme theme;
@@ -143,19 +143,19 @@ class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
           children: [
             if (widget.hasHeader)
               _CalendarHeader(
-                key: const Key(_WidgetsConstants.calendarHeaderKey),
+                key: const Key(WidgetsConstants.calendarHeaderKey),
                 date: state.selectedDate,
                 theme: widget.theme.headerTheme,
               ),
             _CalendarSlider(
-              key: const Key(_WidgetsConstants.calendarSliderKey),
+              key: const Key(WidgetsConstants.calendarSliderKey),
               pageController: _pageController,
               isSnapping: widget.isSnapping,
               date: state.selectedDate,
               rows: state.weeks.indexed
                   .map(
                     (content) => _CalendarRow(
-                      key: Key(_WidgetsConstants.calendarRowKey(content.$1)),
+                      key: Key(WidgetsConstants.calendarRowKey(content.$1)),
                       week: content.$2,
                       background: widget.theme.background,
                       itemBuilder: (itemIndex, day) {
@@ -163,7 +163,7 @@ class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
                             state.selectedDate.isAtSameMomentAs(day);
 
                         return _CalendarItem(
-                          key: Key(_WidgetsConstants.calendarItemKey(
+                          key: Key(WidgetsConstants.calendarItemKey(
                             content.$1,
                             itemIndex,
                           )),
