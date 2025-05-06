@@ -36,19 +36,15 @@ class _CalendarItem extends StatelessWidget {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: isSelectedDate
-                        ? theme.selectedBorderColor
-                        : theme.borderColor,
+                    color: isSelectedDate ? theme.selectedBorderColor : theme.borderColor,
                     width: 3,
                   ),
                   shape: BoxShape.circle,
-                  color: isSelectedDate
-                      ? theme.selectedItemBackground
-                      : theme.itemBackground,
+                  color: isSelectedDate ? theme.selectedItemBackground : theme.itemBackground,
                   boxShadow: [
                     if (theme.hasShadow)
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
+                        color: Colors.black.withValues(alpha: 0.2),
                         blurRadius: 2,
                         offset: const Offset(0, 1),
                         spreadRadius: 2,
@@ -57,8 +53,7 @@ class _CalendarItem extends StatelessWidget {
                 ),
                 child: Text(
                   date.day.toString(),
-                  style:
-                      isSelectedDate ? theme.selectedDateText : theme.dateText,
+                  style: isSelectedDate ? theme.selectedDateText : theme.dateText,
                 ),
               ),
             ),

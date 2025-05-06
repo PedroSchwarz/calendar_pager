@@ -4,9 +4,9 @@ import 'package:flutter_test/flutter_test.dart';
 class SetupWidgetTester extends StatelessWidget {
   final Widget child;
   const SetupWidgetTester({
-    Key? key,
+    super.key,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
