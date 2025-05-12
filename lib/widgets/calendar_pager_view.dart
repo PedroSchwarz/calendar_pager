@@ -102,7 +102,7 @@ class _CalendarPagerViewBody extends StatefulWidget {
 
 class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
   late CalendarBloc _bloc;
-  final PageController _pageController = PageController(initialPage: 1);
+  final PageController _pageController = PageController();
 
   @override
   void initState() {
@@ -111,6 +111,9 @@ class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
     _bloc = BlocProvider.of(context);
     _bloc.add(CalendarDateSelected(date: currentDate, isInitial: true));
     widget.onDateSelected?.call(currentDate);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _pageController.jumpToPage(1);
+    });
   }
 
   void _onDateSelected(DateTime date) {
@@ -159,8 +162,7 @@ class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
                       week: content.$2,
                       background: widget.theme.background,
                       itemBuilder: (itemIndex, day) {
-                        final isSelectedDate =
-                            state.selectedDate.isAtSameMomentAs(day);
+                        final isSelectedDate = state.selectedDate.isAtSameMomentAs(day);
 
                         return _CalendarItem(
                           key: Key(WidgetsConstants.calendarItemKey(
@@ -169,9 +171,7 @@ class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
                           )),
                           isSelectedDate: isSelectedDate,
                           date: day,
-                          onPressed: isSelectedDate
-                              ? null
-                              : () => _onDateSelected(day),
+                          onPressed: isSelectedDate ? null : () => _onDateSelected(day),
                           theme: widget.theme.itemTheme,
                         );
                       },
