@@ -48,6 +48,7 @@ class CalendarPagerTheme {
     TextStyle headerSubtitle = const TextStyle(fontSize: 16),
     TextStyle dateText = const TextStyle(fontSize: 16),
     required Color itemBorder,
+    bool hasShadow = true,
   }) {
     return CalendarPagerTheme(
       background: background,
@@ -72,6 +73,7 @@ class CalendarPagerTheme {
           color: onAccent,
         ),
         currentDateIndicatorColor: accent,
+        hasShadow: hasShadow,
       ),
     );
   }
