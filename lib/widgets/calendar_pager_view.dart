@@ -143,6 +143,7 @@ class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
       bloc: _bloc,
       builder: (context, CalendarState state) {
         return Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             if (widget.hasHeader)
               _CalendarHeader(

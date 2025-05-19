@@ -21,8 +21,7 @@ class _CalendarSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      // TODO: Improve widget dynamic height
-      height: 111,
+      height: CalendarPagerViewConstants.collapsedHeight,
       child: PageView(
         pageSnapping: isSnapping,
         controller: pageController,
