@@ -1,6 +1,7 @@
 import 'package:calendar_pager/bloc/calendar_bloc.dart';
 import 'package:calendar_pager/bloc/calendar_event.dart';
 import 'package:calendar_pager/bloc/calendar_state.dart';
+import 'package:calendar_pager/controller/calendar_pager_controller.dart';
 import 'package:calendar_pager/utils/constants/widgets_constants.dart';
 import 'package:calendar_pager/utils/extensions/date_extensions.dart';
 import 'package:calendar_pager/widgets/theme/calendar_pager_theme.dart';
@@ -17,9 +18,11 @@ class CalendarPagerView extends StatelessWidget {
   final bool hasHeader;
   final bool isSnapping;
   final DateTime? initialDate;
+  final CalendarPagerController? controller;
   final void Function(DateTime)? onDateSelected;
   final VoidCallback? onPreviousWeekFetched;
   final VoidCallback? onNextWeekFetched;
+  final ValueChanged<int>? onWeekChanged;
 
   /// Calendar Pager Widget.
   ///
@@ -38,6 +41,10 @@ class CalendarPagerView extends StatelessWidget {
   /// * Optional.
   /// * Default value is [null].
   ///
+  /// [controller] Controller for programmatically controlling the [CalendarPagerView].
+  /// * Optional.
+  /// * Default value is [null].
+  ///
   /// [onDateSelected] Callback function that passes the selected date.
   /// * Optional.
   /// * Default value is [null].
@@ -49,15 +56,21 @@ class CalendarPagerView extends StatelessWidget {
   /// [onNextWeekFetched] Listener function that's triggered when the next week is fetched.
   /// * Optional.
   /// * Default value is [null].
+  ///
+  /// [onWeekChanged] Listener function that's triggered when the week is changed.
+  /// * Optional.
+  /// * Default value is [null].
   const CalendarPagerView({
     super.key,
     required this.theme,
     this.hasHeader = true,
     this.isSnapping = true,
     this.initialDate,
+    this.controller,
     this.onDateSelected,
     this.onPreviousWeekFetched,
     this.onNextWeekFetched,
+    this.onWeekChanged,
   });
 
   @override
@@ -67,11 +80,13 @@ class CalendarPagerView extends StatelessWidget {
       child: _CalendarPagerViewBody(
         theme: theme,
         hasHeader: hasHeader,
+        controller: controller,
         initialDate: initialDate,
         isSnapping: isSnapping,
         onDateSelected: onDateSelected,
         onNextWeekFetched: onNextWeekFetched,
         onPreviousWeekFetched: onPreviousWeekFetched,
+        onWeekChanged: onWeekChanged,
       ),
     );
   }
@@ -79,21 +94,25 @@ class CalendarPagerView extends StatelessWidget {
 
 class _CalendarPagerViewBody extends StatefulWidget {
   final CalendarPagerTheme theme;
+  final CalendarPagerController? controller;
   final bool hasHeader;
   final bool isSnapping;
   final DateTime? initialDate;
   final void Function(DateTime)? onDateSelected;
   final VoidCallback? onPreviousWeekFetched;
   final VoidCallback? onNextWeekFetched;
+  final ValueChanged<int>? onWeekChanged;
 
   const _CalendarPagerViewBody({
     required this.theme,
+    required this.controller,
     required this.hasHeader,
     required this.isSnapping,
     required this.initialDate,
     required this.onDateSelected,
     required this.onPreviousWeekFetched,
     required this.onNextWeekFetched,
+    required this.onWeekChanged,
   });
 
   @override
@@ -114,6 +133,18 @@ class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _pageController.jumpToPage(1);
     });
+
+    final controller = widget.controller;
+    if (controller != null) {
+      controller.registerGoToInitialDateCallback(() {
+        _bloc.add(CalendarDateSelected(date: currentDate));
+        _pageController.animateToPage(
+          1,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.linear,
+        );
+      });
+    }
   }
 
   void _onDateSelected(DateTime date) {
@@ -129,6 +160,10 @@ class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
   void _onFetchNextWeek() {
     _bloc.add(CalendarFetchWeek(type: FetchWeekType.next));
     widget.onNextWeekFetched?.call();
+  }
+
+  void _onWeekChanged(int index) {
+    widget.onWeekChanged?.call(index);
   }
 
   @override
@@ -163,16 +198,21 @@ class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
                       week: content.$2,
                       background: widget.theme.background,
                       itemBuilder: (itemIndex, day) {
-                        final isSelectedDate = state.selectedDate.isAtSameMomentAs(day);
+                        final isSelectedDate = state.selectedDate
+                            .isAtSameMomentAs(day);
 
                         return _CalendarItem(
-                          key: Key(WidgetsConstants.calendarItemKey(
-                            content.$1,
-                            itemIndex,
-                          )),
+                          key: Key(
+                            WidgetsConstants.calendarItemKey(
+                              content.$1,
+                              itemIndex,
+                            ),
+                          ),
                           isSelectedDate: isSelectedDate,
                           date: day,
-                          onPressed: isSelectedDate ? null : () => _onDateSelected(day),
+                          onPressed: isSelectedDate
+                              ? null
+                              : () => _onDateSelected(day),
                           theme: widget.theme.itemTheme,
                         );
                       },
@@ -181,6 +221,7 @@ class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
                   .toList(),
               onGoToFirstWeek: _onFetchPreviousWeek,
               onGoToLastPage: _onFetchNextWeek,
+              onPageChanged: _onWeekChanged,
             ),
           ],
         );

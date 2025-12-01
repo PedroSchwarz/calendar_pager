@@ -7,6 +7,7 @@ class _CalendarSlider extends StatelessWidget {
   final List<Widget> rows;
   final VoidCallback onGoToFirstWeek;
   final VoidCallback onGoToLastPage;
+  final ValueChanged<int> onPageChanged;
 
   const _CalendarSlider({
     super.key,
@@ -16,6 +17,7 @@ class _CalendarSlider extends StatelessWidget {
     required this.rows,
     required this.onGoToFirstWeek,
     required this.onGoToLastPage,
+    required this.onPageChanged,
   });
 
   @override
@@ -26,6 +28,8 @@ class _CalendarSlider extends StatelessWidget {
         pageSnapping: isSnapping,
         controller: pageController,
         onPageChanged: (index) {
+          onPageChanged(index);
+
           if (index == 0) {
             onGoToFirstWeek();
             pageController.nextPage(
