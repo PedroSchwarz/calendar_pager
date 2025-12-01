@@ -22,7 +22,7 @@ class CalendarPagerView extends StatelessWidget {
   final void Function(DateTime)? onDateSelected;
   final VoidCallback? onPreviousWeekFetched;
   final VoidCallback? onNextWeekFetched;
-  final ValueChanged<int>? onWeekChanged;
+  final Function(int index, int initialPage)? onWeekChanged;
 
   /// Calendar Pager Widget.
   ///
@@ -101,7 +101,7 @@ class _CalendarPagerViewBody extends StatefulWidget {
   final void Function(DateTime)? onDateSelected;
   final VoidCallback? onPreviousWeekFetched;
   final VoidCallback? onNextWeekFetched;
-  final ValueChanged<int>? onWeekChanged;
+  final Function(int index, int initialPage)? onWeekChanged;
 
   const _CalendarPagerViewBody({
     required this.theme,
@@ -164,8 +164,8 @@ class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
     widget.onNextWeekFetched?.call();
   }
 
-  void _onWeekChanged(int index) {
-    widget.onWeekChanged?.call(index);
+  void _onWeekChanged({required int index, required int initialPage}) {
+    widget.onWeekChanged?.call(index, initialPage);
   }
 
   @override
@@ -223,7 +223,8 @@ class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
                   .toList(),
               onGoToFirstWeek: _onFetchPreviousWeek,
               onGoToLastPage: _onFetchNextWeek,
-              onPageChanged: _onWeekChanged,
+              onPageChanged: (index) =>
+                  _onWeekChanged(index: index, initialPage: _initialPage),
             ),
           ],
         );
