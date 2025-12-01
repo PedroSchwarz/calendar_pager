@@ -122,6 +122,7 @@ class _CalendarPagerViewBody extends StatefulWidget {
 class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
   late CalendarBloc _bloc;
   final PageController _pageController = PageController();
+  int _initialPage = 1;
 
   @override
   void initState() {
@@ -131,7 +132,7 @@ class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
     _bloc.add(CalendarDateSelected(date: currentDate, isInitial: true));
     widget.onDateSelected?.call(currentDate);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _pageController.jumpToPage(1);
+      _pageController.jumpToPage(_initialPage);
     });
 
     final controller = widget.controller;
@@ -139,7 +140,7 @@ class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
       controller.registerGoToInitialDateCallback(() {
         _bloc.add(CalendarDateSelected(date: currentDate));
         _pageController.animateToPage(
-          1,
+          _initialPage,
           duration: const Duration(milliseconds: 300),
           curve: Curves.linear,
         );
@@ -153,6 +154,7 @@ class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
   }
 
   void _onFetchPreviousWeek() {
+    _initialPage++;
     _bloc.add(CalendarFetchWeek(type: FetchWeekType.previous));
     widget.onPreviousWeekFetched?.call();
   }
