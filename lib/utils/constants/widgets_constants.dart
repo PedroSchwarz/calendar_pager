@@ -1,8 +1,9 @@
 class WidgetsConstants {
   static const calendarHeaderKey = 'calendarHeader';
   static const calendarSliderKey = 'calendarSlider';
-  static calendarRowKey(index) => 'calendarRow$index';
-  static calendarItemKey(rowIndex, index) => 'calendarItem$rowIndex-$index';
+  static String calendarRowKey(int index) => 'calendarRow$index';
+  static String calendarItemKey(int rowIndex, int index) =>
+      'calendarItem$rowIndex-$index';
 }
 
 class CalendarPagerViewConstants {
