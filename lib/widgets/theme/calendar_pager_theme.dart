@@ -40,6 +40,15 @@ class CalendarPagerTheme {
   /// * The value applies for the selected state of the date's item but with fontWeight as bold and color as onAccent.
   ///
   /// [itemBorder] Item border color for the dates.
+  ///
+  /// [hasShadow] Boolean that shows/hides the shadow of the date's container.
+  /// * Optional.
+  /// * Default value is [true].
+  ///
+  /// [hasCompleteDate] Boolean that shows/hides the complete date info in the header.
+  /// * Optional.
+  /// * Default value is [true].
+  /// * If [hasCompleteDate] is false, the complete date info will not be displayed in the header.
   factory CalendarPagerTheme.from({
     required Color background,
     required Color accent,
@@ -49,6 +58,7 @@ class CalendarPagerTheme {
     TextStyle dateText = const TextStyle(fontSize: 16),
     required Color itemBorder,
     bool hasShadow = true,
+    bool hasCompleteDate = true,
   }) {
     return CalendarPagerTheme(
       background: background,
@@ -58,7 +68,7 @@ class CalendarPagerTheme {
         secondaryText: headerTitle.copyWith(fontWeight: FontWeight.normal),
         completeDateText: headerSubtitle,
         alignment: CrossAxisAlignment.start,
-        hasCompleteDate: true,
+        hasCompleteDate: hasCompleteDate,
       ),
       itemTheme: CalendarItemTheme(
         dayNameText: dateText,
