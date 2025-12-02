@@ -22,7 +22,7 @@ class CalendarPagerView extends StatelessWidget {
   final void Function(DateTime)? onDateSelected;
   final VoidCallback? onPreviousWeekFetched;
   final VoidCallback? onNextWeekFetched;
-  final Function(
+  final void Function(
     int index,
     int initialPage,
     DateTime firstDate,
@@ -107,7 +107,7 @@ class _CalendarPagerViewBody extends StatefulWidget {
   final void Function(DateTime)? onDateSelected;
   final VoidCallback? onPreviousWeekFetched;
   final VoidCallback? onNextWeekFetched;
-  final Function(
+  final void Function(
     int index,
     int initialPage,
     DateTime firstDate,
