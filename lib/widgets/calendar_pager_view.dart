@@ -22,7 +22,13 @@ class CalendarPagerView extends StatelessWidget {
   final void Function(DateTime)? onDateSelected;
   final VoidCallback? onPreviousWeekFetched;
   final VoidCallback? onNextWeekFetched;
-  final Function(int index, int initialPage)? onWeekChanged;
+  final Function(
+    int index,
+    int initialPage,
+    DateTime firstDate,
+    DateTime lastDate,
+  )?
+  onWeekChanged;
 
   /// Calendar Pager Widget.
   ///
@@ -101,7 +107,13 @@ class _CalendarPagerViewBody extends StatefulWidget {
   final void Function(DateTime)? onDateSelected;
   final VoidCallback? onPreviousWeekFetched;
   final VoidCallback? onNextWeekFetched;
-  final Function(int index, int initialPage)? onWeekChanged;
+  final Function(
+    int index,
+    int initialPage,
+    DateTime firstDate,
+    DateTime lastDate,
+  )?
+  onWeekChanged;
 
   const _CalendarPagerViewBody({
     required this.theme,
@@ -164,8 +176,13 @@ class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
     widget.onNextWeekFetched?.call();
   }
 
-  void _onWeekChanged({required int index, required int initialPage}) {
-    widget.onWeekChanged?.call(index, initialPage);
+  void _onWeekChanged({
+    required int index,
+    required int initialPage,
+    required DateTime firstDate,
+    required DateTime lastDate,
+  }) {
+    widget.onWeekChanged?.call(index, initialPage, firstDate, lastDate);
   }
 
   @override
@@ -223,8 +240,12 @@ class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
                   .toList(),
               onGoToFirstWeek: _onFetchPreviousWeek,
               onGoToLastPage: _onFetchNextWeek,
-              onPageChanged: (index) =>
-                  _onWeekChanged(index: index, initialPage: _initialPage),
+              onPageChanged: (index) => _onWeekChanged(
+                index: index,
+                initialPage: _initialPage,
+                firstDate: state.weeks[index].first,
+                lastDate: state.weeks[index].last,
+              ),
             ),
           ],
         );
