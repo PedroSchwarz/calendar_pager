@@ -207,75 +207,121 @@ class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
                 date: state.selectedDate,
                 theme: widget.theme.headerTheme,
               ),
-            _CalendarSlider(
-              key: const Key(WidgetsConstants.calendarSliderKey),
-              pageController: _pageController,
-              isSnapping: widget.isSnapping,
-              date: state.selectedDate,
-              rows: state.weeks.indexed
-                  .map(
-                    (content) => _CalendarRow(
-                      key: Key(WidgetsConstants.calendarRowKey(content.$1)),
-                      week: content.$2,
-                      background: widget.theme.background,
-                      borderColor: widget.theme.itemTheme.borderColor,
-                      dateText: widget.theme.itemTheme.dateText.color,
-                      onPreviousWeek: () async {
-                        await _pageController.previousPage(
-                          duration: const Duration(milliseconds: 100),
-                          curve: Curves.linear,
-                        );
-                        final index = _pageController.page?.toInt() ?? 0;
-                        _onWeekChanged(
-                          index: index,
-                          initialPage: _initialPage,
-                          firstDate: state.weeks[index].first,
-                          lastDate: state.weeks[index].last,
-                        );
-                      },
-                      onNextWeek: () async {
-                        await _pageController.nextPage(
-                          duration: const Duration(milliseconds: 100),
-                          curve: Curves.linear,
-                        );
-                        final index = _pageController.page?.toInt() ?? 0;
-                        _onWeekChanged(
-                          index: index,
-                          initialPage: _initialPage,
-                          firstDate: state.weeks[index].first,
-                          lastDate: state.weeks[index].last,
-                        );
-                      },
-                      itemBuilder: (itemIndex, day) {
-                        final isSelectedDate = state.selectedDate
-                            .isAtSameMomentAs(day);
-
-                        return _CalendarItem(
-                          key: Key(
-                            WidgetsConstants.calendarItemKey(
-                              content.$1,
-                              itemIndex,
-                            ),
-                          ),
-                          isSelectedDate: isSelectedDate,
-                          date: day,
-                          onPressed: isSelectedDate
-                              ? null
-                              : () => _onDateSelected(day),
-                          theme: widget.theme.itemTheme,
-                        );
-                      },
+            Row(
+              children: [
+                if (Platform.isMacOS)
+                  GestureDetector(
+                    onTap: () async {
+                      await _pageController.previousPage(
+                        duration: const Duration(milliseconds: 100),
+                        curve: Curves.linear,
+                      );
+                      final index = _pageController.page?.toInt() ?? 0;
+                      _onWeekChanged(
+                        index: index,
+                        initialPage: _initialPage,
+                        firstDate: state.weeks[index].first,
+                        lastDate: state.weeks[index].last,
+                      );
+                    },
+                    child: Container(
+                      height: 40,
+                      width: 40,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: widget.theme.itemTheme.borderColor,
+                          width: 3,
+                        ),
+                        shape: BoxShape.circle,
+                        color: widget.theme.background,
+                      ),
+                      child: Icon(
+                        Icons.chevron_left,
+                        color: widget.theme.itemTheme.dateText.color,
+                      ),
                     ),
-                  )
-                  .toList(),
-              onGoToFirstWeek: _onFetchPreviousWeek,
-              onGoToLastPage: _onFetchNextWeek,
-              onPageChanged: (index) => _onWeekChanged(
-                index: index,
-                initialPage: _initialPage,
-                firstDate: state.weeks[index].first,
-                lastDate: state.weeks[index].last,
-              ),
+                  ),
+                Expanded(
+                  child: _CalendarSlider(
+                    key: const Key(WidgetsConstants.calendarSliderKey),
+                    pageController: _pageController,
+                    isSnapping: widget.isSnapping,
+                    date: state.selectedDate,
+                    rows: state.weeks.indexed
+                        .map(
+                          (content) => _CalendarRow(
+                            key: Key(
+                              WidgetsConstants.calendarRowKey(content.$1),
+                            ),
+                            week: content.$2,
+                            background: widget.theme.background,
+                            itemBuilder: (itemIndex, day) {
+                              final isSelectedDate = state.selectedDate
+                                  .isAtSameMomentAs(day);
+
+                              return _CalendarItem(
+                                key: Key(
+                                  WidgetsConstants.calendarItemKey(
+                                    content.$1,
+                                    itemIndex,
+                                  ),
+                                ),
+                                isSelectedDate: isSelectedDate,
+                                date: day,
+                                onPressed: isSelectedDate
+                                    ? null
+                                    : () => _onDateSelected(day),
+                                theme: widget.theme.itemTheme,
+                              );
+                            },
+                          ),
+                        )
+                        .toList(),
+                    onGoToFirstWeek: _onFetchPreviousWeek,
+                    onGoToLastPage: _onFetchNextWeek,
+                    onPageChanged: (index) => _onWeekChanged(
+                      index: index,
+                      initialPage: _initialPage,
+                      firstDate: state.weeks[index].first,
+                      lastDate: state.weeks[index].last,
+                    ),
+                  ),
+                ),
+                if (Platform.isMacOS)
+                  GestureDetector(
+                    onTap: () async {
+                      await _pageController.nextPage(
+                        duration: const Duration(milliseconds: 100),
+                        curve: Curves.linear,
+                      );
+                      final index = _pageController.page?.toInt() ?? 0;
+                      _onWeekChanged(
+                        index: index,
+                        initialPage: _initialPage,
+                        firstDate: state.weeks[index].first,
+                        lastDate: state.weeks[index].last,
+                      );
+                    },
+                    child: Container(
+                      height: 40,
+                      width: 40,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: widget.theme.itemTheme.borderColor,
+                          width: 3,
+                        ),
+                        shape: BoxShape.circle,
+                        color: widget.theme.background,
+                      ),
+                      child: Icon(
+                        Icons.chevron_right,
+                        color: widget.theme.itemTheme.dateText.color,
+                      ),
+                    ),
+                  ),
+              ],
             ),
           ],
         );
