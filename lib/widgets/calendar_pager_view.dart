@@ -221,7 +221,10 @@ class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
                       borderColor: widget.theme.itemTheme.borderColor,
                       dateText: widget.theme.itemTheme.dateText.color,
                       onPreviousWeek: () async {
-                        _onFetchPreviousWeek();
+                        await _pageController.previousPage(
+                          duration: const Duration(milliseconds: 100),
+                          curve: Curves.linear,
+                        );
                         final index = _pageController.page?.toInt() ?? 0;
                         _onWeekChanged(
                           index: index,
@@ -231,7 +234,6 @@ class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
                         );
                       },
                       onNextWeek: () async {
-                        _onFetchNextWeek();
                         await _pageController.nextPage(
                           duration: const Duration(milliseconds: 100),
                           curve: Curves.linear,
