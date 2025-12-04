@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:calendar_pager/bloc/calendar_bloc.dart';
 import 'package:calendar_pager/bloc/calendar_event.dart';
 import 'package:calendar_pager/bloc/calendar_state.dart';
@@ -216,6 +218,10 @@ class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
                       key: Key(WidgetsConstants.calendarRowKey(content.$1)),
                       week: content.$2,
                       background: widget.theme.background,
+                      borderColor: widget.theme.itemTheme.borderColor,
+                      dateText: widget.theme.itemTheme.dateText.color,
+                      onPreviousWeek: _onFetchPreviousWeek,
+                      onNextWeek: _onFetchNextWeek,
                       itemBuilder: (itemIndex, day) {
                         final isSelectedDate = state.selectedDate
                             .isAtSameMomentAs(day);
