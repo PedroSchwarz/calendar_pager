@@ -6,6 +6,7 @@ import 'package:calendar_pager/bloc/calendar_state.dart';
 import 'package:calendar_pager/controller/calendar_pager_controller.dart';
 import 'package:calendar_pager/utils/constants/widgets_constants.dart';
 import 'package:calendar_pager/utils/extensions/date_extensions.dart';
+import 'package:calendar_pager/widgets/calendar_control_button.dart';
 import 'package:calendar_pager/widgets/theme/calendar_pager_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -208,11 +209,12 @@ class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
                 theme: widget.theme.headerTheme,
               ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 if (Platform.isMacOS)
                   Padding(
                     padding: const EdgeInsets.only(left: 16),
-                    child: GestureDetector(
+                    child: CalendarControlButton(
                       onTap: () async {
                         await _pageController.previousPage(
                           duration: const Duration(milliseconds: 100),
@@ -226,23 +228,10 @@ class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
                           lastDate: state.weeks[index].last,
                         );
                       },
-                      child: Container(
-                        height: 40,
-                        width: 40,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: widget.theme.itemTheme.borderColor,
-                            width: 3,
-                          ),
-                          shape: BoxShape.circle,
-                          color: widget.theme.background,
-                        ),
-                        child: Icon(
-                          Icons.chevron_left,
-                          color: widget.theme.itemTheme.dateText.color,
-                        ),
-                      ),
+                      icon: Icons.chevron_left,
+                      borderColor: widget.theme.itemTheme.borderColor,
+                      backgroundColor: widget.theme.background,
+                      iconColor: widget.theme.itemTheme.dateText.color,
                     ),
                   ),
                 Expanded(
@@ -294,7 +283,7 @@ class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
                 if (Platform.isMacOS)
                   Padding(
                     padding: const EdgeInsets.only(right: 16),
-                    child: GestureDetector(
+                    child: CalendarControlButton(
                       onTap: () async {
                         await _pageController.nextPage(
                           duration: const Duration(milliseconds: 100),
@@ -308,23 +297,10 @@ class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
                           lastDate: state.weeks[index].last,
                         );
                       },
-                      child: Container(
-                        height: 40,
-                        width: 40,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: widget.theme.itemTheme.borderColor,
-                            width: 3,
-                          ),
-                          shape: BoxShape.circle,
-                          color: widget.theme.background,
-                        ),
-                        child: Icon(
-                          Icons.chevron_right,
-                          color: widget.theme.itemTheme.dateText.color,
-                        ),
-                      ),
+                      icon: Icons.chevron_right,
+                      borderColor: widget.theme.itemTheme.borderColor,
+                      backgroundColor: widget.theme.background,
+                      iconColor: widget.theme.itemTheme.dateText.color,
                     ),
                   ),
               ],
