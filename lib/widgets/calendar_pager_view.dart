@@ -220,8 +220,34 @@ class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
                       background: widget.theme.background,
                       borderColor: widget.theme.itemTheme.borderColor,
                       dateText: widget.theme.itemTheme.dateText.color,
-                      onPreviousWeek: _onFetchPreviousWeek,
-                      onNextWeek: _onFetchNextWeek,
+                      onPreviousWeek: () async {
+                        _onFetchPreviousWeek();
+                        await _pageController.previousPage(
+                          duration: const Duration(milliseconds: 100),
+                          curve: Curves.linear,
+                        );
+                        final index = _pageController.page?.toInt() ?? 0;
+                        _onWeekChanged(
+                          index: index,
+                          initialPage: _initialPage,
+                          firstDate: state.weeks[index].first,
+                          lastDate: state.weeks[index].last,
+                        );
+                      },
+                      onNextWeek: () async {
+                        _onFetchNextWeek();
+                        await _pageController.nextPage(
+                          duration: const Duration(milliseconds: 100),
+                          curve: Curves.linear,
+                        );
+                        final index = _pageController.page?.toInt() ?? 0;
+                        _onWeekChanged(
+                          index: index,
+                          initialPage: _initialPage,
+                          firstDate: state.weeks[index].first,
+                          lastDate: state.weeks[index].last,
+                        );
+                      },
                       itemBuilder: (itemIndex, day) {
                         final isSelectedDate = state.selectedDate
                             .isAtSameMomentAs(day);
