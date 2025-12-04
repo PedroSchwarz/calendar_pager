@@ -210,35 +210,38 @@ class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
             Row(
               children: [
                 if (Platform.isMacOS)
-                  GestureDetector(
-                    onTap: () async {
-                      await _pageController.previousPage(
-                        duration: const Duration(milliseconds: 100),
-                        curve: Curves.linear,
-                      );
-                      final index = _pageController.page?.toInt() ?? 0;
-                      _onWeekChanged(
-                        index: index,
-                        initialPage: _initialPage,
-                        firstDate: state.weeks[index].first,
-                        lastDate: state.weeks[index].last,
-                      );
-                    },
-                    child: Container(
-                      height: 40,
-                      width: 40,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: widget.theme.itemTheme.borderColor,
-                          width: 3,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16),
+                    child: GestureDetector(
+                      onTap: () async {
+                        await _pageController.previousPage(
+                          duration: const Duration(milliseconds: 100),
+                          curve: Curves.linear,
+                        );
+                        final index = _pageController.page?.toInt() ?? 0;
+                        _onWeekChanged(
+                          index: index,
+                          initialPage: _initialPage,
+                          firstDate: state.weeks[index].first,
+                          lastDate: state.weeks[index].last,
+                        );
+                      },
+                      child: Container(
+                        height: 40,
+                        width: 40,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: widget.theme.itemTheme.borderColor,
+                            width: 3,
+                          ),
+                          shape: BoxShape.circle,
+                          color: widget.theme.background,
                         ),
-                        shape: BoxShape.circle,
-                        color: widget.theme.background,
-                      ),
-                      child: Icon(
-                        Icons.chevron_left,
-                        color: widget.theme.itemTheme.dateText.color,
+                        child: Icon(
+                          Icons.chevron_left,
+                          color: widget.theme.itemTheme.dateText.color,
+                        ),
                       ),
                     ),
                   ),
@@ -289,35 +292,38 @@ class _CalendarPagerViewBodyState extends State<_CalendarPagerViewBody> {
                   ),
                 ),
                 if (Platform.isMacOS)
-                  GestureDetector(
-                    onTap: () async {
-                      await _pageController.nextPage(
-                        duration: const Duration(milliseconds: 100),
-                        curve: Curves.linear,
-                      );
-                      final index = _pageController.page?.toInt() ?? 0;
-                      _onWeekChanged(
-                        index: index,
-                        initialPage: _initialPage,
-                        firstDate: state.weeks[index].first,
-                        lastDate: state.weeks[index].last,
-                      );
-                    },
-                    child: Container(
-                      height: 40,
-                      width: 40,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: widget.theme.itemTheme.borderColor,
-                          width: 3,
+                  Padding(
+                    padding: const EdgeInsets.only(right: 16),
+                    child: GestureDetector(
+                      onTap: () async {
+                        await _pageController.nextPage(
+                          duration: const Duration(milliseconds: 100),
+                          curve: Curves.linear,
+                        );
+                        final index = _pageController.page?.toInt() ?? 0;
+                        _onWeekChanged(
+                          index: index,
+                          initialPage: _initialPage,
+                          firstDate: state.weeks[index].first,
+                          lastDate: state.weeks[index].last,
+                        );
+                      },
+                      child: Container(
+                        height: 40,
+                        width: 40,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: widget.theme.itemTheme.borderColor,
+                            width: 3,
+                          ),
+                          shape: BoxShape.circle,
+                          color: widget.theme.background,
                         ),
-                        shape: BoxShape.circle,
-                        color: widget.theme.background,
-                      ),
-                      child: Icon(
-                        Icons.chevron_right,
-                        color: widget.theme.itemTheme.dateText.color,
+                        child: Icon(
+                          Icons.chevron_right,
+                          color: widget.theme.itemTheme.dateText.color,
+                        ),
                       ),
                     ),
                   ),
